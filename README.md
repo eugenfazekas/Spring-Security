@@ -2,4 +2,4 @@
 
 ### Inspired by Laurentiu Spilca
 
-	Spring Security in Actions
+	Spring Security in Action

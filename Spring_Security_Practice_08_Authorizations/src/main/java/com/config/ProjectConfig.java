@@ -2,6 +2,7 @@ package com.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
@@ -20,7 +21,7 @@ public class ProjectConfig extends WebSecurityConfigurerAdapter {
 
         var user1 = User.withUsername("john")
                 .password("12345")
-                .authorities("read")
+                .authorities("read","premium")
                 .build();
 
         var user2 = User.withUsername("jane")
@@ -45,10 +46,18 @@ public class ProjectConfig extends WebSecurityConfigurerAdapter {
     	String expression = "hasAuthority('read') and !hasAuthority('delete')";
     	
         http.httpBasic();
-        http.authorizeRequests().antMatchers("/deny").denyAll()
-        						.and().authorizeRequests().antMatchers("/hello").access(expression);
-        						
-        http.authorizeRequests().anyRequest().authenticated();
+        http.authorizeRequests()			
+        						.antMatchers(HttpMethod.GET, "/hello_a").authenticated()
+        						.mvcMatchers(HttpMethod.POST, "/hello_a").permitAll()
+        						.mvcMatchers(HttpMethod.GET, "/a/*/b").permitAll()
+        						.mvcMatchers(HttpMethod.GET, "/a/**/b").permitAll()
+        						.mvcMatchers("/product/{code:^[0-9]*$}").permitAll()
+        						.mvcMatchers("/email/{email:.*(.+@.+\\.com)}").permitAll()
+        						.regexMatchers(".*/(us|uk|ca)+/(en|fr).*").hasAuthority("premium")
+        						.mvcMatchers("/deny").denyAll()
+        						.mvcMatchers("/hello").access(expression)   						
+     .and().authorizeRequests().anyRequest().authenticated();
+     http.csrf().disable();
          
                //.anyRequest().access("T(java.time.LocalTime).now().isAfter(T(java.time.LocalTime).of(12, 0))");  
     }
