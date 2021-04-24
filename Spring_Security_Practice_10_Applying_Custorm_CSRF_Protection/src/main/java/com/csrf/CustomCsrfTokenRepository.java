@@ -1,5 +1,11 @@
 package com.csrf;
 
+import java.util.Optional;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.csrf.CsrfToken;
@@ -7,13 +13,7 @@ import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.DefaultCsrfToken;
 
 import com.entities.Token;
-import com.filters.CsrfTokenLogger;
 import com.repository.JpaTokenRepository;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Optional;
-import java.util.UUID;
 
 public class CustomCsrfTokenRepository implements CsrfTokenRepository {
 
