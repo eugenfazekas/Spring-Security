@@ -1,0 +1,12 @@
+curl -X POST -H "content-type: application/json" -d "{\"username\":\"eugen\",\"password\":\"12345\"}" http://localhost:8080/user/add
+
+curl -X POST -H "content-type: application/json" -d "{\"username\":\"eugen\",\"password\":\"12345\"}" http://localhost:8080/user/auth
+
+curl -X POST -H "content-type: application/json" -d "{\"username\":\"eugen\",\"code\":\"****\"}" http://localhost:8080/user/otp/check
+
+curl -H "username:john" -H "password:12345" http://localhost:9090/login
+
+curl -v -H "username:john" -H "code:4296" http://localhost:9090/login
+
+curl -H "Authorization:eyJhbGciOiJIUzI1NiJ9.eyJvd25lciI6IkpvaG4ifQ.39ggWsgaxOOyjpZPHIHAHZt_pHH9ovhav4ldCDMEleA" http://localhost:9090/test
+
